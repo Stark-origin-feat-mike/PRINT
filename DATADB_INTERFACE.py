@@ -7,19 +7,22 @@ from enum import Enum
 #cursor.execute("SELECT * FROM STUDENTS")			 #### METHOD CALLS ####	
 #													 ######################
 #Iterate Selects														  #
-#for row in cursor.fetchall():	// use fetchone() for first				  # #									result								  #
+#for row in cursor.fetchall():	// use fetchone() for first				  # 
+#									result								  #
 #	#print(row[0])														  #
 #																		  #
 #Query Construct Format													  #
 #query = "INSERT INTO "+TABLES.STUDENTS+" VALUES (1, 'john doe')"		  #
 ###########################################################################
 
+
+#TABLE STRING ENUMERATIONS
 class TABLES(Enum):
 	APPOINTMENT = "appointments"
 	CURATORS = "curators"
 	CURATORSPACE ="curator_space"
 	RESOURCE = "resource"
-	SPACE = "spaces"
+	SPACES = "spaces"
 	STUDENTS = "students"
 	STUDENTTRAINING ="student_training"
 	TRAINING = "training"
@@ -50,6 +53,7 @@ class SPACES_ELEMENTS(Enum):
 	ID="id"
 	BUILDING="building"
 	ROOM="room"
+	NAME="name"
 	
 class STUDENTS_ELEMENTS(Enum):
 	ID="ID"
@@ -62,60 +66,55 @@ class TRAINING(Enum):
 	ID="id"
 	RESOURCEID="resourceid"
 
-
+#MYSQL CONNECTION PARAMETERS
 db = MySQLdb.connect(host="localhost",
 						user="jwill124",
 						passwd="ak47ppk",
 						db="printdata")
 
-cursor = db.cursor()
 
 
-def CreateNewStudent(name):
-	#TODO - MOVE ID ALLOC TO NEW METHOD
+def AllocateID(tablename, elementid, cur):
 	id = 1
-	query="SELECT * FROM "+TABLES.STUDENTS+ " ORDER BY " + str(STUDENTS_ELEMENTS.ID) + " DESC"
-	cursor.execute(query)
-	row=cursor.fetchone()
+	query = "SELECT * FROM " + tablename +" ORDER BY " + str(elementid) + " DESC"
+	cur.execute(query)
+	row = cur.fetchone()
 	if row is not None:
-		id=int(row[0])+1
-	#id = AllocateID(TABLES.STUDENTS, STUDENT_ELEMENTS.ID)
+		id = (int(row[0]) + 1)
+	return id
+
+def AddNewStudent(name):
+	id = AllocateID(TABLES.STUDENTS, STUDENTS_ELEMENTS.ID, cursor)
 	query = "INSERT INTO "+TABLES.STUDENTS+" VALUES ("+str(id)+",'"+name+"')"
 	cursor.execute(query)
 	db.commit()
 
-#TODO - TEST	
-def CreateNewCurator(name,spacename):
-	#TODO - MOVE ID ALLOC TO NEW METHOD
-	id = 1
-	spaceid = 1
-	cursor.execute("SELECT * FROM "+TABLES.CURATORS+ " ORDER BY " + str(CURATOR_ELEMENTS.ID) + " DESC LIMIT 0,1")
-	row=cursor.fetchone()
-	if row is not None:
-		id=row[0]
-	#id = AllocateID(TABLES.CURATORS, CURATOR_ELEMENTS.ID)
-	
-	#TODO - FETCH SPACE ID FOR GIVEN SPACE	
-	#query= "SELECT " +SPACES_ELEMENTS.ID+ " WHERE " + SPACES_ELEMENTS.NAME + " = " + spacename
-	#cursor.execute(query)	
-	#row=curesor.fetchone()
-	#if row is not Noone:
-	#	spaceid=row[0]
-	
+
+def AddNewCurator(name):
+	id = AllocateID(TABLES.CURATORS, CURATOR_ELEMENTS.ID,cursor)
 	query = "INSERT INTO "+TABLES.CURATORS+" VALUES ("+str(id)+",'"+name+"')"
-	
-	#TEST
-	print(query)
-	
 	cursor.execute(query)
 	db.commit()
 
+def AddNewSpace(building,room,name):
+	id = AllocateID(TABLES.SPACES,SPACES_ELEMENTS.ID, cursor)
+	query = "INSERT INTO "+TABLES.SPACES+" VALUES ("+str(id)+ ",'" +building+ "','" +room+"','" +name+"')"
+	cursor.execute(query)
+	
+def AddNewResource(name,trainingrequired,spacename):
+	id = AllocateID(TABLES.RESOURCE,RESOURCE_ELEMENTS.ID,cursor)
+	spaceid = 0
+	query = "SELECT " + SPACES_ELEMENTS.ID + " FROM " + TABLES.SPACES + " WHERE " + SPACES_ELEMENTS.NAME + " = '" + spacename + "'" 
+	cursor.execute(query)
+	row = cursor.fetchone()
+	if row is not None:
+		spaceid = row[0]
+	query = "INSERT INTO " + TABLES.RESOURCE + " VALUES (" +str(id)+ ",'" +name+ "','" +trainingrequired+ "'," +str(spaceid)+ ")"
+	cursor.execute(query)
 
-#TODO ADDSPACE()
-#TODO ADDRESOURCE()
-#TODO SETAPPOINTMENT()
+#TODO SETNEWAPPOINTMENT()
 #TODO RECORDSTUDENTTRAINING()
-#TODO ADDTRAINING()
+#TODO ADDNEWTRAINING()
 #TODO ADDCURATORTOSPACE()***SEE CURATOR_SPACE LAYOUT***
 #TODO REMOVESPACE()
 #TODO REMOVERESOURCE()
@@ -124,7 +123,9 @@ def CreateNewCurator(name,spacename):
 #TODO REMOVESTUDENTFROMDATABASE()
 #TODO REMOVESTUDENTTRAINING()
 #TODO CANCELAPPOINTMENT()
+#TODO SELECTALLFROMTABLE(TABLENAME)
 
-	
+cursor = db.cursor()
+
 db.commit()
 db.close()
