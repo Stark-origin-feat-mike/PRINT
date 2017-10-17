@@ -18,7 +18,7 @@ from enum import Enum
 
 #TABLE STRING ENUMERATIONS
 class TABLES(Enum):
-	APPOINTMENT = "appointments"
+	APPOINTMENTS = "appointments"
 	CURATORS = "curators"
 	CURATORSPACE ="curator_space"
 	RESOURCE = "resource"
@@ -60,11 +60,14 @@ class STUDENTS_ELEMENTS(Enum):
 	NAME="name"
 	
 class STUDENT_TRAINING_ELEMENTS(Enum):
+	ID="ID"
 	STUDENTID="studentid"
 	TRAININGID="training_id"
-class TRAINING(Enum):
+class TRAINING_ELEMENTS(Enum):
 	ID="id"
 	RESOURCEID="resourceid"
+	URL = "url"
+	DESCRIPTION = "description"
 
 #MYSQL CONNECTION PARAMETERS
 db = MySQLdb.connect(host="localhost",
@@ -111,10 +114,21 @@ def AddNewResource(name,trainingrequired,spacename):
 		spaceid = row[0]
 	query = "INSERT INTO " + TABLES.RESOURCE + " VALUES (" +str(id)+ ",'" +name+ "','" +trainingrequired+ "'," +str(spaceid)+ ")"
 	cursor.execute(query)
+	
+def SetNewAppointment(studentid,resourceid,startdatetime,enddatetime):
+	id = AllocateID(TABLES.APPOINTMENTS, APPOINTMENT_ELEMENTS.ID,cursor)
+	query = "INSERT INTO " +TABLES.APPOINTMENTS+ " VALUES ("+str(id)+"," +str(studentid)+ "," +str(resourceid)+ ",'" +startdatetime+ "','" +enddatetime+ "')"
+	cursor.execute(query)
+	
+def RecordStudentTraining(studentid,trainingid):
+	query = "INSERT INTO "+TABLES.STUDENTTRAINING+" VALUES ("+str(studentid)+","+str(trainingid)+")"
+	cursor.execute(query)
+	
+def AddNewTraining(resourceid,url,description):
+	id =  AllocateID(TABLES.TRAINING,TRAINING_ELEMENTS.ID,cursor)
+	query="INSERT INTO "+TABLES.TRAINING+" VALUES ("+str(id)+","+str(resourceid)+",'"+url+"','"+description+"')"
+	cursor.execute(query)
 
-#TODO SETNEWAPPOINTMENT()
-#TODO RECORDSTUDENTTRAINING()
-#TODO ADDNEWTRAINING()
 #TODO ADDCURATORTOSPACE()***SEE CURATOR_SPACE LAYOUT***
 #TODO REMOVESPACE()
 #TODO REMOVERESOURCE()
