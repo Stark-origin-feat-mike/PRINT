@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<head>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="PRINT.css" type="text/css">
+        <script src="PRINT.js" type="text/javascript"></script>
+</head>
+<body id="bootstrap-overides" onload="setHeights(), setRightWidth()" onresize="setHeights(), setRightWidth()">
+
+            <nav class="navbar navbar-default" id="nav-override">
+                    <div class="container-fluid">
+                            <div class="navbar-header">
+                                    <a class="navbar-brand" href="#">Home</a>
+                            </div>
+                            <ul class="nav navbar-nav">
+                                    <li><a href="#">List View</a></li>
+                                    <li><a href="#">Map View</a></li>
+                                    <li><a href="#">LOGIN</a></li>
+                            </ul>
+                    </div>
+            </nav>
+
+
+            <div id="left">
+                <nav id="sideBar">
+                        <div class="sort">
+                                <div class="inner-addon left-addon">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                        <input type="text" class="form-control" placeholder="Search for a resource"/>
+                                </div>
+                                <div class="down-menu" onclick="showAdvancedSearch()">   
+                                        <h4>Click Me!</h4>
+                                </div>
+                                <ul id="as-options">
+                                        <li>Thing 1</li>    
+                                        <li>Thing 2</li>    
+                                        <li>Thing 3</li>    
+                                        <li>Thing 4</li>    
+                                </ul>
+                        </div>
+                </nav>
+            </div>
+            <div id="right">
+                <div id="googleMap" onload="showMap()"></div>
+                <!--  Google Map API Call-->
+                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBEiac9nQsW9VmPm7o-b1x54RHsyoMFdFE&callback=showMap"></script>
+            </div>
+            <!--</div>-->
+
+</body>
+</html>
