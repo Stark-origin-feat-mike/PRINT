@@ -87,8 +87,9 @@ def AllocateID(tablename, elementid, cur):
 		id = (int(row[0]) + 1)
 	return id
 	
-def DeleteTableEntryByProperty(tablename, tableproperty, entry):
+def DeleteTableEntryByProperty(tablename, tableproperty, entryname):
 	query="DELETE FROM "+tablename+" WHERE "+tableproperty+" = '"+entryname+"'"
+	print(query)
 	cursor.execute(query)
 	
 	
@@ -147,10 +148,9 @@ def AddCuratorToSpace(curatorid,spaceid):
 	
 def RemoveSpaceByName(spacename):
 	DeleteTableEntryByProperty(TABLES.SPACES, SPACES_ELEMENTS.NAME, spacename)
-	
-#TODO - TEST
+
 def RemoveResourceByName(resourcename):
-	DeleteTableEntryProperty(TABLES.RESOURCE,RESOURCE_ELEMENTS.NAME, resourcename)
+	DeleteTableEntryByProperty(TABLES.RESOURCE,RESOURCE_ELEMENTS.NAME, resourcename)
 	
 #TODO - TEST
 def RemoveCuratorFromSpaceByID(curatorid):
@@ -185,6 +185,6 @@ def UpdateTableEntry(table, tableproperty,itemid, value):
 
 cursor = db.cursor()
 
-AddNewResource("TestName","No Training Required","JW_Test_Space", 1)
+
 db.commit()
 db.close()
