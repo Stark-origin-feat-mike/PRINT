@@ -48,6 +48,7 @@ class RESOURCE_ELEMENTS(Enum):
 	NAME="name"
 	TRAININGREQUIRED="trainingrequired"
 	SPACEID="spaceid"
+	ACTIVE="active"
 	
 class SPACES_ELEMENTS(Enum):
 	ID="id"
@@ -85,6 +86,16 @@ def AllocateID(tablename, elementid, cur):
 	if row is not None:
 		id = (int(row[0]) + 1)
 	return id
+	
+def DeleteTableEntryByProperty(tablename, tableproperty, entry):
+	query="DELETE FROM "+tablename+" WHERE "+tableproperty+" = '"+entryname+"'"
+	cursor.execute(query)
+	
+	
+def SelectAllFromTable(tablename):
+	query="SELECT * FROM "+tablename
+	cursor.execute(query)
+	return cursor.fetchall()
 
 def AddNewStudent(name):
 	id = AllocateID(TABLES.STUDENTS, STUDENTS_ELEMENTS.ID, cursor)
@@ -104,7 +115,8 @@ def AddNewSpace(building,room,name):
 	query = "INSERT INTO "+TABLES.SPACES+" VALUES ("+str(id)+ ",'" +building+ "','" +room+"','" +name+"')"
 	cursor.execute(query)
 	
-def AddNewResource(name,trainingrequired,spacename):
+
+def AddNewResource(name,trainingrequired,spacename, operational):
 	id = AllocateID(TABLES.RESOURCE,RESOURCE_ELEMENTS.ID,cursor)
 	spaceid = 0
 	query = "SELECT " + SPACES_ELEMENTS.ID + " FROM " + TABLES.SPACES + " WHERE " + SPACES_ELEMENTS.NAME + " = '" + spacename + "'" 
@@ -112,7 +124,7 @@ def AddNewResource(name,trainingrequired,spacename):
 	row = cursor.fetchone()
 	if row is not None:
 		spaceid = row[0]
-	query = "INSERT INTO " + TABLES.RESOURCE + " VALUES (" +str(id)+ ",'" +name+ "','" +trainingrequired+ "'," +str(spaceid)+ ")"
+	query = "INSERT INTO " + TABLES.RESOURCE + " VALUES (" +str(id)+ ",'" +name+ "','" +trainingrequired+ "'," +str(spaceid)+","+str(operational)+ ")"
 	cursor.execute(query)
 	
 def SetNewAppointment(studentid,resourceid,startdatetime,enddatetime):
@@ -128,18 +140,51 @@ def AddNewTraining(resourceid,url,description):
 	id =  AllocateID(TABLES.TRAINING,TRAINING_ELEMENTS.ID,cursor)
 	query="INSERT INTO "+TABLES.TRAINING+" VALUES ("+str(id)+","+str(resourceid)+",'"+url+"','"+description+"')"
 	cursor.execute(query)
+	
+def AddCuratorToSpace(curatorid,spaceid):
+	query="INSERT INTO "+TABLES.CURATORSPACE+ " VALUES ("+str(curatorid)+","+str(spaceid)+")"
+	cursor.execute(query)
+	
+def RemoveSpaceByName(spacename):
+	DeleteTableEntryByProperty(TABLES.SPACES, SPACES_ELEMENTS.NAME, spacename)
+	
+#TODO - TEST
+def RemoveResourceByName(resourcename):
+	DeleteTableEntryProperty(TABLES.RESOURCE,RESOURCE_ELEMENTS.NAME, resourcename)
+	
+#TODO - TEST
+def RemoveCuratorFromSpaceByID(curatorid):
+	DeleteTableEntryByProperty(TABLES.CURATORSPACE,CURATOR_SPACE_ELEMENTS.CURATORID,curatorid)
 
-#TODO ADDCURATORTOSPACE()***SEE CURATOR_SPACE LAYOUT***
-#TODO REMOVESPACE()
-#TODO REMOVERESOURCE()
-#TODO REMOVECURATORFROMSPACE()
-#TODO REMOVECURATORFROMDATABASE()
-#TODO REMOVESTUDENTFROMDATABASE()
-#TODO REMOVESTUDENTTRAINING()
-#TODO CANCELAPPOINTMENT()
-#TODO SELECTALLFROMTABLE(TABLENAME)
+#TODO - TEST
+def RemoveCuratorFromDatabase(curatorid):
+	RemoveCuratorFromSpaceByID(curatorid)
+	DeleteTableEntryByProperty(TABLES.CURATORS, CURATOR_ELEMENTS.ID, curatorid)
+
+#TODO - TEST	
+def RemoveStudentFromDatabase(studentid):
+	DeleteTableEntryByProperty(TABLES.STUDENTS,STUDENTS_ELEMENTS.ID, studentid)
+	
+#TODO - TEST	
+def RemoveTrainingFromDatabase(trainingid):
+	DeleteTableEntryByProperty(TABLES.TRAINING, TRAINING_ELEMENTS.ID, trainingid)
+
+#TODO - TEST
+def RemoveAppointment(appointmentid):
+	DeleteTableEntryByProperty(TABLES.APPOINTMENTS, APPOINTMENT_ELEMENTS.ID, appointmentid)
+	
+#TODO - TEST
+def SetResourceStatus(resourceid,state):
+	UpdateTableEntry(TABLES.RESOURCE, RESOURCE_ELEMENTS.STATUS, resourceid, state)
+	
+#TODO - TEST	
+def UpdateTableEntry(table, tableproperty,itemid, value):
+	query = "UPDATE "+ table + " SET " +tableproperty+" = "+value+" WHERE ID = " +itemid 
+	cursor.execute(query)
+	
 
 cursor = db.cursor()
 
+AddNewResource("TestName","No Training Required","JW_Test_Space", 1)
 db.commit()
 db.close()
