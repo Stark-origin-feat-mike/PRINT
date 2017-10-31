@@ -49,6 +49,7 @@ class RESOURCE_ELEMENTS(Enum):
 	TRAININGREQUIRED="trainingrequired"
 	SPACEID="spaceid"
 	ACTIVE="active"
+	TIME-LIMIT="time-limit"
 	
 class SPACES_ELEMENTS(Enum):
 	ID="id"
@@ -69,6 +70,8 @@ class TRAINING_ELEMENTS(Enum):
 	RESOURCEID="resourceid"
 	URL = "url"
 	DESCRIPTION = "description"
+	REQUIRED = "required"
+	COMPLETED = "completed"
 
 #MYSQL CONNECTION PARAMETERS
 db = MySQLdb.connect(host="localhost",
@@ -116,8 +119,8 @@ def AddNewSpace(building,room,name):
 	query = "INSERT INTO "+TABLES.SPACES+" VALUES ("+str(id)+ ",'" +building+ "','" +room+"','" +name+"')"
 	cursor.execute(query)
 	
-
-def AddNewResource(name,trainingrequired,spacename, operational):
+#TODO - TEST NEW FIELDS
+def AddNewResource(name,trainingrequired,spacename, operational,timelimit):
 	id = AllocateID(TABLES.RESOURCE,RESOURCE_ELEMENTS.ID,cursor)
 	spaceid = 0
 	query = "SELECT " + SPACES_ELEMENTS.ID + " FROM " + TABLES.SPACES + " WHERE " + SPACES_ELEMENTS.NAME + " = '" + spacename + "'" 
@@ -125,7 +128,7 @@ def AddNewResource(name,trainingrequired,spacename, operational):
 	row = cursor.fetchone()
 	if row is not None:
 		spaceid = row[0]
-	query = "INSERT INTO " + TABLES.RESOURCE + " VALUES (" +str(id)+ ",'" +name+ "','" +trainingrequired+ "'," +str(spaceid)+","+str(operational)+ ")"
+	query = "INSERT INTO " + TABLES.RESOURCE + " VALUES (" +str(id)+ ",'" +name+ "','" +trainingrequired+ "'," +str(spaceid)+","+str(operational)+ ","+timelimit+")"
 	cursor.execute(query)
 	
 def SetNewAppointment(studentid,resourceid,startdatetime,enddatetime):
@@ -133,8 +136,9 @@ def SetNewAppointment(studentid,resourceid,startdatetime,enddatetime):
 	query = "INSERT INTO " +TABLES.APPOINTMENTS+ " VALUES ("+str(id)+"," +str(studentid)+ "," +str(resourceid)+ ",'" +startdatetime+ "','" +enddatetime+ "')"
 	cursor.execute(query)
 	
-def RecordStudentTraining(studentid,trainingid):
-	query = "INSERT INTO "+TABLES.STUDENTTRAINING+" VALUES ("+str(studentid)+","+str(trainingid)+")"
+#TODO - TEST ADDITIONS	
+def RecordStudentTraining(studentid,trainingid,required,completed):
+	query = "INSERT INTO "+TABLES.STUDENTTRAINING+" VALUES ("+str(studentid)+","+str(trainingid)+","+required+","+completed+")"
 	cursor.execute(query)
 	
 def AddNewTraining(resourceid,url,description):
