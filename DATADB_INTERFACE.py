@@ -38,6 +38,7 @@ class CURATOR_ELEMENTS(Enum):
 	ID="id"
 	NAME="name"
 	SPACEID="spaceid"
+	EMAIL="email"
 	
 class CURATOR_SPACE_ELEMENTS(Enum):
 	CURATORID="curatorid"
@@ -108,9 +109,9 @@ def AddNewStudent(name):
 	db.commit()
 
 
-def AddNewCurator(name):
+def AddNewCurator(name,email):
 	id = AllocateID(TABLES.CURATORS, CURATOR_ELEMENTS.ID,cursor)
-	query = "INSERT INTO "+TABLES.CURATORS+" VALUES ("+str(id)+",'"+name+"')"
+	query = "INSERT INTO "+TABLES.CURATORS+" VALUES ("+str(id)+",'"+name+"'+",'"+email+"')"
 	cursor.execute(query)
 	db.commit()
 
