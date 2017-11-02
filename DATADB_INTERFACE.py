@@ -28,6 +28,7 @@ class TABLES(Enum):
 	TRAINING = "training"
 	
 class APPOINTMENT_ELEMENTS(Enum):
+	FIELDS=['id','student_id','resource_id','startdatetime','enddatetime']
 	ID ="id"
 	STUDENTID="student_id"
 	RESOURCEID="resource_id"
@@ -35,38 +36,46 @@ class APPOINTMENT_ELEMENTS(Enum):
 	ENDDATETIME="enddatetime"
 	
 class CURATOR_ELEMENTS(Enum):
+	FIELDS=['id','name','spaceid','email']
 	ID="id"
 	NAME="name"
 	SPACEID="spaceid"
 	EMAIL="email"
 	
 class CURATOR_SPACE_ELEMENTS(Enum):
+	FIELDS=['curatorid','spaceid']
 	CURATORID="curatorid"
 	SPACEID="spaceid"
 	
 class RESOURCE_ELEMENTS(Enum):
+	FIELDS=['id','name','trainingrequired','spaceid','operational','time_limit']
 	ID="id"
 	NAME="name"
 	TRAININGREQUIRED="trainingrequired"
 	SPACEID="spaceid"
-	ACTIVE="active"
-	TIME-LIMIT="time-limit"
+	OPERATIONAL="operational"
+	TIME_LIMIT="time-limit"
 	
 class SPACES_ELEMENTS(Enum):
+	FIELDS=['id','building','room','name']
 	ID="id"
 	BUILDING="building"
 	ROOM="room"
 	NAME="name"
 	
 class STUDENTS_ELEMENTS(Enum):
+	FIELDS=['ID','name']
 	ID="ID"
 	NAME="name"
 	
 class STUDENT_TRAINING_ELEMENTS(Enum):
+	FIELDS=['ID','studentid','training_id']
 	ID="ID"
 	STUDENTID="studentid"
 	TRAININGID="training_id"
+	
 class TRAINING_ELEMENTS(Enum):
+	FIELDS=['id','resourceid','url','description','required','completed']
 	ID="id"
 	RESOURCEID="resourceid"
 	URL = "url"
@@ -74,122 +83,150 @@ class TRAINING_ELEMENTS(Enum):
 	REQUIRED = "required"
 	COMPLETED = "completed"
 
-#MYSQL CONNECTION PARAMETERS
+	
 db = MySQLdb.connect(host="localhost",
-						user="jwill124",
-						passwd="ak47ppk",
-						db="printdata")
-
-
-
-def AllocateID(tablename, elementid, cur):
-	id = 1
-	query = "SELECT * FROM " + tablename +" ORDER BY " + str(elementid) + " DESC"
-	cur.execute(query)
-	row = cur.fetchone()
-	if row is not None:
-		id = (int(row[0]) + 1)
-	return id
-	
-def DeleteTableEntryByProperty(tablename, tableproperty, entryname):
-	query="DELETE FROM "+tablename+" WHERE "+tableproperty+" = '"+entryname+"'"
-	print(query)
-	cursor.execute(query)
-	
-	
-def SelectAllFromTable(tablename):
-	query="SELECT * FROM "+tablename
-	cursor.execute(query)
-	return cursor.fetchall()
-
-def AddNewStudent(name):
-	id = AllocateID(TABLES.STUDENTS, STUDENTS_ELEMENTS.ID, cursor)
-	query = "INSERT INTO "+TABLES.STUDENTS+" VALUES ("+str(id)+",'"+name+"')"
-	cursor.execute(query)
-	db.commit()
-
-
-def AddNewCurator(name,email):
-	id = AllocateID(TABLES.CURATORS, CURATOR_ELEMENTS.ID,cursor)
-	query = "INSERT INTO "+TABLES.CURATORS+" VALUES ("+str(id)+",'"+name+"'+",'"+email+"')"
-	cursor.execute(query)
-	db.commit()
-
-def AddNewSpace(building,room,name):
-	id = AllocateID(TABLES.SPACES,SPACES_ELEMENTS.ID, cursor)
-	query = "INSERT INTO "+TABLES.SPACES+" VALUES ("+str(id)+ ",'" +building+ "','" +room+"','" +name+"')"
-	cursor.execute(query)
-	
-#TODO - TEST NEW FIELDS
-def AddNewResource(name,trainingrequired,spacename, operational,timelimit):
-	id = AllocateID(TABLES.RESOURCE,RESOURCE_ELEMENTS.ID,cursor)
-	spaceid = 0
-	query = "SELECT " + SPACES_ELEMENTS.ID + " FROM " + TABLES.SPACES + " WHERE " + SPACES_ELEMENTS.NAME + " = '" + spacename + "'" 
-	cursor.execute(query)
-	row = cursor.fetchone()
-	if row is not None:
-		spaceid = row[0]
-	query = "INSERT INTO " + TABLES.RESOURCE + " VALUES (" +str(id)+ ",'" +name+ "','" +trainingrequired+ "'," +str(spaceid)+","+str(operational)+ ","+timelimit+")"
-	cursor.execute(query)
-	
-def SetNewAppointment(studentid,resourceid,startdatetime,enddatetime):
-	id = AllocateID(TABLES.APPOINTMENTS, APPOINTMENT_ELEMENTS.ID,cursor)
-	query = "INSERT INTO " +TABLES.APPOINTMENTS+ " VALUES ("+str(id)+"," +str(studentid)+ "," +str(resourceid)+ ",'" +startdatetime+ "','" +enddatetime+ "')"
-	cursor.execute(query)
-	
-#TODO - TEST ADDITIONS	
-def RecordStudentTraining(studentid,trainingid,required,completed):
-	query = "INSERT INTO "+TABLES.STUDENTTRAINING+" VALUES ("+str(studentid)+","+str(trainingid)+","+required+","+completed+")"
-	cursor.execute(query)
-	
-def AddNewTraining(resourceid,url,description):
-	id =  AllocateID(TABLES.TRAINING,TRAINING_ELEMENTS.ID,cursor)
-	query="INSERT INTO "+TABLES.TRAINING+" VALUES ("+str(id)+","+str(resourceid)+",'"+url+"','"+description+"')"
-	cursor.execute(query)
-	
-def AddCuratorToSpace(curatorid,spaceid):
-	query="INSERT INTO "+TABLES.CURATORSPACE+ " VALUES ("+str(curatorid)+","+str(spaceid)+")"
-	cursor.execute(query)
-	
-def RemoveSpaceByName(spacename):
-	DeleteTableEntryByProperty(TABLES.SPACES, SPACES_ELEMENTS.NAME, spacename)
-
-def RemoveResourceByName(resourcename):
-	DeleteTableEntryByProperty(TABLES.RESOURCE,RESOURCE_ELEMENTS.NAME, resourcename)
-	
-#TODO - TEST
-def RemoveCuratorFromSpaceByID(curatorid):
-	DeleteTableEntryByProperty(TABLES.CURATORSPACE,CURATOR_SPACE_ELEMENTS.CURATORID,curatorid)
-
-#TODO - TEST
-def RemoveCuratorFromDatabase(curatorid):
-	RemoveCuratorFromSpaceByID(curatorid)
-	DeleteTableEntryByProperty(TABLES.CURATORS, CURATOR_ELEMENTS.ID, curatorid)
-
-#TODO - TEST	
-def RemoveStudentFromDatabase(studentid):
-	DeleteTableEntryByProperty(TABLES.STUDENTS,STUDENTS_ELEMENTS.ID, studentid)
-	
-#TODO - TEST	
-def RemoveTrainingFromDatabase(trainingid):
-	DeleteTableEntryByProperty(TABLES.TRAINING, TRAINING_ELEMENTS.ID, trainingid)
-
-#TODO - TEST
-def RemoveAppointment(appointmentid):
-	DeleteTableEntryByProperty(TABLES.APPOINTMENTS, APPOINTMENT_ELEMENTS.ID, appointmentid)
-	
-#TODO - TEST
-def SetResourceStatus(resourceid,state):
-	UpdateTableEntry(TABLES.RESOURCE, RESOURCE_ELEMENTS.STATUS, resourceid, state)
-	
-#TODO - TEST	
-def UpdateTableEntry(table, tableproperty,itemid, value):
-	query = "UPDATE "+ table + " SET " +tableproperty+" = "+value+" WHERE ID = " +itemid 
-	cursor.execute(query)
-	
-
+							user="jwill124",
+							passwd="ak47ppk",
+							db="printdata")
+		
 cursor = db.cursor()
 
 
-db.commit()
-db.close()
+class Database_INF:
+		
+
+	@staticmethod
+	def AllocateID(tablename, elementid):
+		id = 1
+		query = "SELECT * FROM " + tablename +" ORDER BY " + str(elementid) + " DESC"
+		cursor.execute(query)
+		row = cursor.fetchone()
+		if row is not None:
+			id = (int(row[0]) + 1)
+		return id
+	
+	@staticmethod
+	def DeleteTableEntryByProperty(tablename, tableproperty, entry):
+		if not isinstance(entry,str):
+			entry = str(entry)
+		query="DELETE FROM "+tablename+" WHERE "+tableproperty+" = '"+entry+"'"
+		print(query)
+		cursor.execute(query)
+		db.commit()
+		
+	@staticmethod
+	def SelectAllFromTable(tablename):
+		query="SELECT * FROM "+tablename
+		cursor.execute(query)
+		return cursor.fetchall()
+
+	@staticmethod
+	def AddNewStudent(name):
+		id = Database_INF.AllocateID(TABLES.STUDENTS, STUDENTS_ELEMENTS.ID)
+		query = "INSERT INTO "+TABLES.STUDENTS+" VALUES ("+str(id)+",'"+name+"')"
+		cursor.execute(query)
+		db.commit()
+
+	@staticmethod
+	def AddNewCurator(name,email):
+		id = Database_INF.AllocateID(TABLES.CURATORS, CURATOR_ELEMENTS.ID)
+		query = "INSERT INTO "+TABLES.CURATORS+" VALUES ("+str(id)+",'"+name+"','"+email+"')"
+		cursor.execute(query)
+		db.commit()
+
+	@staticmethod
+	def AddNewSpace(building,room,name):
+		id = Database_INF.AllocateID(TABLES.SPACES,SPACES_ELEMENTS.ID)
+		query = "INSERT INTO "+TABLES.SPACES+" VALUES ("+str(id)+ ",'" +building+ "','" +room+"','" +name+"')"
+		cursor.execute(query)
+		db.commit()
+		
+	@staticmethod
+	def AddNewResource(name,trainingrequired,spaceid, operational,timelimit):
+		id = Database_INF.AllocateID(TABLES.RESOURCE,RESOURCE_ELEMENTS.ID)
+		query = "INSERT INTO " + TABLES.RESOURCE + " VALUES (" +str(id)+ ",'" +name+ "','" +trainingrequired+ "'," +str(spaceid)+","+str(operational)+ ",'"+timelimit+"')"
+		print(query)
+		cursor.execute(query)
+		db.commit()
+	
+	@staticmethod
+	def SetNewAppointment(studentid,resourceid,startdatetime,enddatetime):
+		id = Database_INF.AllocateID(TABLES.APPOINTMENTS, APPOINTMENT_ELEMENTS.ID)
+		query = "INSERT INTO " +TABLES.APPOINTMENTS+ " VALUES ("+str(id)+"," +str(studentid)+ "," +str(resourceid)+ ",'" +startdatetime+ "','" +enddatetime+ "')"
+		cursor.execute(query)
+		db.commit()
+		
+	@staticmethod
+	def RecordStudentTraining(studentid,trainingid,required,completed):
+		query = "INSERT INTO "+TABLES.STUDENTTRAINING+" VALUES ("+str(studentid)+","+str(trainingid)+","+str(required)+","+str(completed)+")"
+		cursor.execute(query)
+		db.commit()
+		
+	@staticmethod
+	def AddNewTraining(resourceid,url,description):
+		id =  Database_INF.AllocateID(TABLES.TRAINING,TRAINING_ELEMENTS.ID)
+		query="INSERT INTO "+TABLES.TRAINING+" VALUES ("+str(id)+","+str(resourceid)+",'"+url+"','"+description+"')"
+		cursor.execute(query)
+		db.commit()
+		
+	@staticmethod
+	def AddCuratorToSpace(curatorid,spaceid):
+		query="INSERT INTO "+TABLES.CURATORSPACE+ " VALUES ("+str(curatorid)+","+str(spaceid)+")"
+		cursor.execute(query)
+		db.commit()
+		
+	@staticmethod
+	def RemoveSpaceByName(spacename):
+		Database_INF.DeleteTableEntryByProperty(TABLES.SPACES, SPACES_ELEMENTS.NAME, spacename)
+		db.commit()
+
+	@staticmethod
+	def RemoveResourceByName(resourcename):
+		Database_INF.DeleteTableEntryByProperty(TABLES.RESOURCE,RESOURCE_ELEMENTS.NAME, resourcename)
+		db.commit()
+		
+	
+	@staticmethod
+	def RemoveCuratorFromSpaceByID(curatorid):
+		Database_INF.DeleteTableEntryByProperty(TABLES.CURATORSPACE,CURATOR_SPACE_ELEMENTS.CURATORID,curatorid)
+		db.commit()
+
+
+	@staticmethod
+	def RemoveCuratorFromDatabase(curatorid):
+		Database_INF.RemoveCuratorFromSpaceByID(curatorid)
+		Database_INF.DeleteTableEntryByProperty(TABLES.CURATORS, CURATOR_ELEMENTS.ID, curatorid)
+		db.commit()
+
+	
+	@staticmethod	
+	def RemoveStudentFromDatabase(studentid):
+		Database_INF.DeleteTableEntryByProperty(TABLES.STUDENTS,STUDENTS_ELEMENTS.ID, studentid)
+		db.commit()
+		
+	@staticmethod
+	def RemoveTrainingFromDatabase(trainingid):
+		Database_INF.DeleteTableEntryByProperty(TABLES.TRAINING, TRAINING_ELEMENTS.ID, trainingid)
+		db.commit()
+
+	
+	@staticmethod
+	def RemoveAppointment(appointmentid):
+		Database_INF.DeleteTableEntryByProperty(TABLES.APPOINTMENTS, APPOINTMENT_ELEMENTS.ID, appointmentid)
+		db.commit()
+		
+	
+	@staticmethod
+	def SetResourceStatus(resourceid,state):
+		Database_INF.UpdateTableEntry(TABLES.RESOURCE, RESOURCE_ELEMENTS.OPERATIONAL, resourceid, state)
+		db.commit()
+		
+	
+	@staticmethod	
+	def UpdateTableEntry(table, tableproperty,itemid, value):
+		if not isinstance(value,str):
+			value = str(value)
+		query = "UPDATE "+ table + " SET " +tableproperty+" = "+value+" WHERE ID = " +str(itemid) 
+		cursor.execute(query)
+		db.commit()
+
