@@ -16,10 +16,11 @@ ul {
 
 /*--------Sidebar Stuff--------*/
 #sideBar {
-        background-color: #111;
+        background-color: #002664;
         position: absolute;
         width: 100%;
         height: 100%;
+        color: #EFAB00;
 }
 
 .inner-addon {
@@ -29,6 +30,10 @@ ul {
         margin-top: 15px;
 }
 
+        /*----Glyphicon----*/
+.glyphicon-search{
+        color: #002664;
+}
 .inner-addon .glyphicon {
         position: absolute;
         padding: 10px;
@@ -57,16 +62,44 @@ ul {
 }
 
 /*--------Advanced Search Menu--------*/
+ #campus-opts-selector {
+        padding: 10px 0px 10px 15px;
+}
+
 .down-menu {
+        text-align: left;
+        /*padding: 10px 0 10px 15px;*/
+        cursor: pointer;
+        user-select: none;
 }
 
 .down-menu h4 {
-        text-align: left;
-        margin-left: 15px; 
+        margin: 0px;
 }
 
-#as-options {
+.down-menu:hover{
+        background-color: #104BA9;
+}
+
+#campus-options{
         display: none;
+        padding: 0px;
+}
+
+.down-item{
+        display: none;
+}
+
+.copt-item{
+        width: 100%;
+        padding: 2px 0px 3px 20px;
+        text-align: left;
+        cursor: pointer;
+        user-select: none;
+}
+
+.copt-item:hover {
+        background-color: #104BA9;
 }
 
 /*--------Google Map--------*/
@@ -81,20 +114,5 @@ ul {
 }
 
 #right{
-        background-color: pink;
         float: right;
 }
-
-/*--------Right Side--------
-#right {
-        float: right;
-        width: 100%;
-        height: 100%;
-        background-color: pink;
-}
-
-#ghostBar {
-        float: left;
-        width: 250px;
-        height: 100%;
-} */
