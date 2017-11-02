@@ -12,7 +12,7 @@ def TableAsXML(tablename):
 			item = list[i][j]
 			if not isinstance(item,str):
 				item=str(item)
-			xml+="\t\t<"+columnheader[j]+">\n"+"\t\t\t<"+item+">\n"+"\t\t</"+columnheader[j]+">\n"
+			xml+="\t\t<"+columnheader[j]+">\n"+"\t\t\t"+item+"\n"+"\t\t</"+columnheader[j]+">\n"
 		xml+="\t</"+entrytype+">\n"
 	xml+="<"+tablename+">"
 	print(xml)
@@ -53,5 +53,3 @@ def TableFields(tablename):
 		return(columnheader)
 	return(columnheader)
 	
-	
-
