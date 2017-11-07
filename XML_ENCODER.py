@@ -37,7 +37,7 @@ def GetMarkersAsXML():
 
 			#DJANGO VERSION#
 ##############################################	
-#def GetSpacesAsMarkers(request):
+#def GetMarkersAsXMLrequest):
 #	list=dbi.SelectAllFromTable("markers")
 #	columnheader = TableFields("markers")
 #	xml="<markers>\n"
