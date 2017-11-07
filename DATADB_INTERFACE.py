@@ -26,6 +26,16 @@ class TABLES(Enum):
 	STUDENTS = "students"
 	STUDENTTRAINING ="student_training"
 	TRAINING = "training"
+	MARKERS = "markers"
+	
+class MARKERS_ELEMENTS(Enum):
+	FIELDS = ['id','name','address','lat','lng','type']
+	ID = "id"
+	NAME = "name"
+	ADDRESS = "address"
+	LAT = "lat"
+	LNG = "lng"
+	TYPE = "type"
 	
 class APPOINTMENT_ELEMENTS(Enum):
 	FIELDS=['id','student_id','resource_id','startdatetime','enddatetime']
@@ -230,3 +240,4 @@ class Database_INF:
 		cursor.execute(query)
 		db.commit()
 
+		
