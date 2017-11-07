@@ -18,10 +18,9 @@ def GetTableAsXML(tablename):
 	xml+="<"+tablename+">"
 	print(xml)
 
-	
-def GetMarkersAsXML():
-	list=dbi.SelectAllFromTable("markers")
-	columnheader = TableFields("markers")
+def GetSpacesAsMarkers():
+	list=dbi.SelectAllFromTable("spaces")
+	columnheader = TableFields("spaces")
 	xml="<markers>\n"
 	entrytype = "marker"
 	for i in range(0, len(list)):
@@ -30,16 +29,15 @@ def GetMarkersAsXML():
 			item = list[i][j]
 			if not isinstance(item,str):
 				item = str(item)
-			xml += " " +columnheader[j]+"="+item
+			xml += " " +columnheader[j]+"=\""+item+"\""
 		xml+=" />\n"		
 	xml+="</markers>"
 	print(xml)
 
-			#DJANGO VERSION#
-##############################################	
-#def GetMarkersAsXMLrequest):
-#	list=dbi.SelectAllFromTable("markers")
-#	columnheader = TableFields("markers")
+#--		   		  DJANGO VERS 					--#	
+#def GetSpacesAsMarkers(response):
+#	list=dbi.SelectAllFromTable("spaces")
+#	columnheader = TableFields("spaces")
 #	xml="<markers>\n"
 #	entrytype = "marker"
 #	for i in range(0, len(list)):
@@ -48,12 +46,12 @@ def GetMarkersAsXML():
 #			item = list[i][j]
 #			if not isinstance(item,str):
 #				item = str(item)
-#			xml += " " +columnheader[j]+"="+item
+#			xml += " " +columnheader[j]+"=\""+item+"\""
 #		xml+=" />\n"		
 #	xml+="</markers>"
 #	return HttpResponse(xml)
-###############################################
-
+####################################################
+	
 def TableFields(tablename):
 	columnheader =[]
 	if tablename == "appointments":
@@ -86,10 +84,6 @@ def TableFields(tablename):
 		return(columnheader)
 	if tablename ==  "training":
 		for j in TRAINING_ELEMENTS.FIELDS:
-			columnheader.append(j)
-		return(columnheader)
-	if tablename ==  "markers":
-		for j in MARKERS_ELEMENTS.FIELDS:
 			columnheader.append(j)
 		return(columnheader)
 	return(columnheader)
