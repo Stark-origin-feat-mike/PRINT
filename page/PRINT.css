@@ -10,6 +10,10 @@ ul {
         list-style-type: none;
 }
 
+hr{
+        margin: 5px 0px 5px 0px;
+}
+
 .navbar {
         margin-bottom: 0px;
 }
@@ -30,7 +34,7 @@ ul {
         margin-top: 15px;
 }
 
-        /*----Glyphicon----*/
+/*-------->--------Glyphicon--------*/
 .glyphicon-search{
         color: #002664;
 }
@@ -50,6 +54,7 @@ ul {
 
 .left-addon input {
         padding-left: 30px;
+        margin-bottom: 5px;
 }
 
 .right-addon input {
@@ -61,14 +66,17 @@ ul {
         padding: 0px;
 }
 
-/*--------Advanced Search Menu--------*/
+.glyphicon-menu-right{
+        display: inline;
+}
+
+/*-------->--------Advanced Search Menu--------*/
  #campus-opts-selector {
         padding: 10px 0px 10px 15px;
 }
 
 .down-menu {
         text-align: left;
-        /*padding: 10px 0 10px 15px;*/
         cursor: pointer;
         user-select: none;
 }
@@ -107,6 +115,7 @@ ul {
         width: 100%;
 }
 
+/*--------Page--------*/
 #left {
         width: 250px;
         float:  left; 

@@ -13,7 +13,7 @@ campusLocs['tus-options'] = [40.467633, -81.407134];
 
 // Moving Map Center
 function moveToLoc(id){
-	var nll = new google.maps.LatLng(id[0], id[1]);
+	var nll = new google.maps.LatLng(campusLocs[id][0], campusLocs[id][1]);
 	map.panTo(nll);
 }
 
@@ -35,7 +35,7 @@ function expand(id){
 		}
 	}
 
-	if (current != byId('campus-options')) moveToLoc(campusLocs[id]);
+	if (current != byId('campus-options')) moveToLoc(id);
 };
 
 // Initilizing Google Map
@@ -44,6 +44,7 @@ function showMap(){
 	var initState = {
 		center: new google.maps.LatLng(41.149467, -81.347666),
 		zoom: 17,
+		mapTypeId: google.maps.MapTypeId.SATELLITE
 	};
 	map = new google.maps.Map(byId('googleMap'), initState);
 
@@ -67,4 +68,9 @@ function setHeights(){
 	$('sideBar').css('height', wh-hh);
 	$('#right').css('height', wh-hh);
 	$('#googleMap').css('height', wh-hh);
+}
+
+function logValue(){
+	var x = byId('get-search').value;
+	console.log(x);
 }
