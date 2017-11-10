@@ -110,6 +110,12 @@ hr{
         background-color: #104BA9;
 }
 
+/*-------->--------Dynamically Loaded List Elements--------*/
+#listing {
+        margin: 0px;
+        padding: 0px;
+}
+
 /*--------Google Map--------*/
 #googleMap {
         width: 100%;
@@ -124,4 +130,17 @@ hr{
 
 #right{
         float: right;
+}
+
+.dList{
+        color: pink;
+        background-color: purple;
+        border: 1px solid black;
+        border-radius: 5px;
+        margin: 0px 5px 5px 5px;
+        padding: 0px 5px 0px 5px;
+}
+
+.dList:hover {
+        background-color: red;
 }

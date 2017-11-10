@@ -1,3 +1,6 @@
+var testStuff = [{"name": "interior", "location": {"lat": 41.147488, "lng": -81.343053}, "type": "makerSpace"}, 
+				 {"name": "crocodile", "location": {"lat": 41.147, "lng": -81.343}, "type": "Movie Theater"}];
+
 // Shorthand
 function byId(id){	return document.getElementById(id);	};
 
@@ -20,7 +23,7 @@ function moveToLoc(id){
 // Dispaying Sidebar Dropdown Menu
 function expand(id){
 	var cmpss = ['ken-options', 'sta-options', 'gea-options', 'ash-options', 'sal-options',
-	'eli-options', 'tru-options', 'tus-options'];
+	'eli-options', 'tru-options', 'tus-options', 'campus-options'];
 	var current = byId(id);
 
 	if (current.style.display == "block"){
@@ -28,11 +31,6 @@ function expand(id){
 	}
 	else {
 		current.style.display = "block";
-		for(var i = 0; i < cmpss.length; ++i){
-			if (byId(cmpss[i]) != current){
-				byId(cmpss[i]).style.display = 'none';
-			}
-		}
 	}
 
 	if (current != byId('campus-options')) moveToLoc(id);
@@ -47,6 +45,14 @@ function showMap(){
 		mapTypeId: google.maps.MapTypeId.SATELLITE
 	};
 	map = new google.maps.Map(byId('googleMap'), initState);
+
+	for (var i = 0; i < testStuff.length; ++i){
+		var marker = new google.maps.Marker({
+	      position: testStuff[i]["location"],
+	      map: map,
+	      title: testStuff[i]["name"]
+	  	});
+	}
 
 	google.maps.event.addListenerOnce(map, 'idle', function() {
     	google.maps.event.trigger(map, 'resize');
@@ -70,7 +76,43 @@ function setHeights(){
 	$('#googleMap').css('height', wh-hh);
 }
 
-function logValue(){
+function logValue(e){
 	var x = byId('get-search').value;
 	console.log(x);
 }
+
+function makeListElements(){
+	for (var i = 0; i < testStuff.length; ++i){
+		var container = byId('listing');
+		var node = document.createElement('li');
+		node.innerHTML = "<div class=\"dList\" onclick=\"dListClick(\'" + testStuff[i]["name"] + "\')\"><p class=\"dPAttr\">Name: " 
+		+ testStuff[i]["name"] + "</p><p>Type: " + testStuff[i]["type"] + "</p></div>";
+		container.appendChild(node);
+	}
+}
+
+function dListClick(name) {
+	var lat;
+	var long;
+	for (var i = 0; i < testStuff.length; ++i){
+		if (testStuff[i]["name"] == name){
+			console.log(testStuff[i]["name"]);
+			lat = testStuff[i]["location"]["lat"];
+			long = testStuff[i]["location"]["lng"];
+			console.log(lat, long);
+			break;
+		}
+	}
+	var nll = new google.maps.LatLng(lat, long);
+	map.panTo(nll);
+}
+
+function search(sstring){
+
+}
+
+$(document).keypress(function(e) {
+    if(e.which == 13) {
+        alert('You pressed enter!');
+    }
+});

@@ -10,12 +10,12 @@
     <script src="PRINT.js" type="text/javascript"></script>
 </head>
 
-<body id="bootstrap-overides" onload="setHeights(), setRightWidth()" onresize="setHeights(), setRightWidth()">
+<body id="bootstrap-overides" onload="setHeights(), setRightWidth(), makeListElements()" onresize="setHeights(), setRightWidth()">
 
     <nav class="navbar navbar-default" id="nav-override">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">KSUPRInT</a>
+                <a class="navbar-brand" href="home.html"><img src="logo.png"></a>
             </div>
             <ul class="nav navbar-nav">
                 <li><a href="#">List View</a></li>
@@ -67,6 +67,13 @@
                 </ul>
             </div>
             <hr>
+
+            <div id="bottom">
+                <ul id="listing">
+                    
+                </ul>                
+            </div>
+
         </nav>
     </div>
 
