@@ -12,23 +12,27 @@ body {
 }
 
 #edit-curator{
-	display: none;
+	
 }
 
 #remove-curator{
-	display: none;
+	
 }
 
 #add-resource{
-	display: none;
+	text-align: center;
+	margin: 0 auto;
+	color: pink;
 }
 
+
+
 #edit-resource{
-	display: none;
+	
 }
 
 #remove-resource{
-	display: none;
+	
 }
 
 .inText{
