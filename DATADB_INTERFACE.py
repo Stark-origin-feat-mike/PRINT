@@ -57,11 +57,15 @@ class RESOURCE_ELEMENTS(Enum):
 	TIME_LIMIT="time-limit"
 	
 class SPACES_ELEMENTS(Enum):
-	FIELDS=['id','building','room','name']
+	FIELDS=['id','building','room','name','type','address','lat','lng']
 	ID="id"
 	BUILDING="building"
 	ROOM="room"
 	NAME="name"
+	TYPE="type"
+	ADDRESS="address"
+	LAT="lat" 
+	LNG="lng" 
 	
 class STUDENTS_ELEMENTS(Enum):
 	FIELDS=['ID','name']
@@ -135,9 +139,10 @@ class Database_INF:
 		db.commit()
 
 	@staticmethod
-	def AddNewSpace(building,room,name):
+	def AddNewSpace(building,room,name,type,addr,lat,lng):
 		id = Database_INF.AllocateID(TABLES.SPACES,SPACES_ELEMENTS.ID)
-		query = "INSERT INTO "+TABLES.SPACES+" VALUES ("+str(id)+ ",'" +building+ "','" +room+"','" +name+"')"
+		query = "INSERT INTO "+TABLES.SPACES+" VALUES ("+str(id)+ ",'" +building+ "','" +room+"','" +name+"','"+type+"','"+addr+"',"+str(lat)+","+str(lng)+")"
+		print(query)
 		cursor.execute(query)
 		db.commit()
 		
@@ -229,4 +234,4 @@ class Database_INF:
 		query = "UPDATE "+ table + " SET " +tableproperty+" = "+value+" WHERE ID = " +str(itemid) 
 		cursor.execute(query)
 		db.commit()
-
+	

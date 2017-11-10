@@ -1,7 +1,8 @@
 from DATADB_INTERFACE import *
 from DATADB_INTERFACE import Database_INF as dbi
+from django.http import HttpResponse
 
-def TableAsXML(tablename):
+def GetTableAsXML(tablename):
 	list = dbi.SelectAllFromTable(tablename)
 	xml = "<"+tablename+">\n"
 	entrytype = tablename[:-1]
@@ -16,6 +17,40 @@ def TableAsXML(tablename):
 		xml+="\t</"+entrytype+">\n"
 	xml+="<"+tablename+">"
 	print(xml)
+
+def GetSpacesAsMarkers():
+	list=dbi.SelectAllFromTable("spaces")
+	columnheader = TableFields("spaces")
+	xml="<markers>\n"
+	entrytype = "marker"
+	for i in range(0, len(list)):
+		xml+="\t<"+entrytype
+		for j in range(0, len(list[i])):
+			item = list[i][j]
+			if not isinstance(item,str):
+				item = str(item)
+			xml += " " +columnheader[j]+"=\""+item+"\""
+		xml+=" />\n"		
+	xml+="</markers>"
+	print(xml)
+
+#--		   		  DJANGO VERS 					--#	
+#def GetSpacesAsMarkers(response):
+#	list=dbi.SelectAllFromTable("spaces")
+#	columnheader = TableFields("spaces")
+#	xml="<markers>\n"
+#	entrytype = "marker"
+#	for i in range(0, len(list)):
+#		xml+="\t<"+entrytype
+#		for j in range(0, len(list[i])):
+#			item = list[i][j]
+#			if not isinstance(item,str):
+#				item = str(item)
+#			xml += " " +columnheader[j]+"=\""+item+"\""
+#		xml+=" />\n"		
+#	xml+="</markers>"
+#	return HttpResponse(xml)
+####################################################
 	
 def TableFields(tablename):
 	columnheader =[]
