@@ -76,30 +76,15 @@ function setHeights(){
 	$('#googleMap').css('height', wh-hh);
 }
 
-function logValue(e){
-	var x = byId('get-search').value;
-	console.log(x);
-}
 
-function makeListElements(){
-	for (var i = 0; i < testStuff.length; ++i){
-		var container = byId('listing');
-		var node = document.createElement('li');
-		node.innerHTML = "<div class=\"dList\" onclick=\"dListClick(\'" + testStuff[i]["name"] + "\')\"><p class=\"dPAttr\">Name: " 
-		+ testStuff[i]["name"] + "</p><p>Type: " + testStuff[i]["type"] + "</p></div>";
-		container.appendChild(node);
-	}
-}
 
 function dListClick(name) {
 	var lat;
 	var long;
 	for (var i = 0; i < testStuff.length; ++i){
 		if (testStuff[i]["name"] == name){
-			console.log(testStuff[i]["name"]);
 			lat = testStuff[i]["location"]["lat"];
 			long = testStuff[i]["location"]["lng"];
-			console.log(lat, long);
 			break;
 		}
 	}
@@ -107,12 +92,36 @@ function dListClick(name) {
 	map.panTo(nll);
 }
 
-function search(sstring){
+$(document).ready(function(){
+	$("#get-search").on('keyup', function (e){
+	    if (e.keyCode == 13) {
+	        var searchedFor = logValue();
+	        search(searchedFor);
+	    }
+	})
+});
 
+function logValue(){
+	var x = byId('get-search').value;
+	return x;
 }
 
-$(document).keypress(function(e) {
-    if(e.which == 13) {
-        alert('You pressed enter!');
-    }
-});
+function search(sstring){
+	// Clearing Nav Bar List
+	$('#listing').empty();
+	for (var i = 0; i < testStuff.length; ++i){
+		if (testStuff[i]["name"] == sstring){
+			makeListElement(testStuff[i]);
+		}
+	}
+}
+
+function makeListElement(resource){
+	//for (var i = 0; i < testStuff.length; ++i){
+		var container = byId('listing');
+		var node = document.createElement('li');
+		node.innerHTML = "<div class=\"dList\" onclick=\"dListClick(\'" + resource["name"] + "\')\"><p class=\"dPAttr\">Name: " 
+		+ resource["name"] + "</p><p>Type: " + resource["type"] + "</p></div>";
+		container.appendChild(node);
+	//}
+}

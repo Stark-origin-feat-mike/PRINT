@@ -10,7 +10,7 @@
     <script src="PRINT.js" type="text/javascript"></script>
 </head>
 
-<body id="bootstrap-overides" onload="setHeights(), setRightWidth(), makeListElements()" onresize="setHeights(), setRightWidth()">
+<body id="bootstrap-overides" onload="setHeights(), setRightWidth()" onresize="setHeights(), setRightWidth()">
 
     <nav class="navbar navbar-default" id="nav-override">
         <div class="container-fluid">
@@ -31,7 +31,7 @@
                 <div class="inner-addon left-addon">
                     <i class="glyphicon glyphicon-search"></i>
                     <input type="text" class="form-control" id="get-search" 
-                    onkeyup="logValue()" placeholder="Search for a resource"/>
+                     placeholder="Search for a resource"/>
                 </div>
                 <div class="down-menu" onclick="expand('campus-options')">
                     <h4 id="campus-opts-selector">
