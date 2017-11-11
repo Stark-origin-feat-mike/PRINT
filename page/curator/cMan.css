@@ -1,10 +1,17 @@
 body {
+	height: 100%;
 	background-color: #002664;
 	color: #EFAB00;
 }
 
 #nav-override{
+	
+	background-color: #002664;
 	margin-bottom: 0px;
+}
+
+#PRInT_logo{
+	height:80%;
 }
 
 #splash{
@@ -33,13 +40,18 @@ body {
 
 .inText{
 	display: inline;
+
 }
 
 #add-curator h4{
 	display: inline;
 }
+::placeholder{
+	color:black;
+}
 
 .page {
+	width:200px;
 	margin: 0 auto;
 	text-align: center;
 }
@@ -52,14 +64,25 @@ body {
 }
 
 #add-curator {
+	font-family: National;
 	text-align: center;
-	margin: 0 auto;
-	color: pink;
+	margin-top : 10px auto;
+	color: #EFAB00;
+}
+
+#title{
+	font-family: National;
+	text-align: center;
+	margin-top: 10px auto;
+	color: #EFAB00;
+	font-size: 20pt;
+	font-weight: bold;
 }
 
 form{
+	display: inline-block
 	margin: 0 auto;
-	width: 270px;
+	width: 150px;
 	text-align: center;
 }
 
