@@ -1,7 +1,7 @@
 var testStuff = [{"name": "interior", "location": {"lat": 41.147488, "lng": -81.343053}, "type": "makerSpace"}, 
 				 {"name": "crocodile", "location": {"lat": 41.147, "lng": -81.343}, "type": "Movie Theater"}];
 
-// Shorthand
+//--------Shorthand--------
 function byId(id){	return document.getElementById(id);	};
 
 var campusLocs = {};
@@ -14,13 +14,13 @@ campusLocs['eli-options'] = [40.616960, -80.576650];
 campusLocs['tru-options'] = [41.278921, -80.837273];
 campusLocs['tus-options'] = [40.467633, -81.407134];
 
-// Moving Map Center
+//--------Moving Map Center--------
 function moveToLoc(id){
 	var nll = new google.maps.LatLng(campusLocs[id][0], campusLocs[id][1]);
 	map.panTo(nll);
 }
 
-// Dispaying Sidebar Dropdown Menu
+//--------Dispaying Sidebar Dropdown Menu--------
 function expand(id){
 	var cmpss = ['ken-options', 'sta-options', 'gea-options', 'ash-options', 'sal-options',
 	'eli-options', 'tru-options', 'tus-options', 'campus-options'];
@@ -36,7 +36,7 @@ function expand(id){
 	if (current != byId('campus-options')) moveToLoc(id);
 };
 
-// Initilizing Google Map
+//--------Initilizing Google Map--------
 var map;
 var markers = [];
 function showMap(){
@@ -53,6 +53,7 @@ function showMap(){
 	      map: map,
 	      title: testStuff[i]["name"]
 	  	});
+	  	markerListener(marker);
 	  	markers.push(marker);
 	}
 
@@ -61,17 +62,18 @@ function showMap(){
 	});
 };
 
-//Getting Width of Google Map
+//--------Getting Width of Google Map--------
 function setRightWidth(){
 	var ww = $(window).width();
 	var lw = $('#left').width();
 	$('#right').css('width', ww-lw);	
 }
 
-// Setting height of Google Map and Nav Bar
+//--------Setting height of Google Map and Nav Bar--------
 function setHeights(){
 	var wh = $(window).height();
 	var hh = $('#nav-override').height();
+	$('.rModal').css({top: hh+2});
 	$('#left').css('height', wh-hh);
 	$('sideBar').css('height', wh-hh);
 	$('#right').css('height', wh-hh);
@@ -83,6 +85,7 @@ function setHeights(){
 function dListClick(name) {
 	var lat;
 	var long;
+	var which;
 	for (var i = 0; i < testStuff.length; ++i){
 		if (testStuff[i]["name"] == name){
 			lat = testStuff[i]["location"]["lat"];
@@ -95,22 +98,6 @@ function dListClick(name) {
 }
 
 //--------Stuff to do when searching--------
-
-$(document).ready(function(){
-	$("#get-search").on('keyup', function (e){
-	    if (e.keyCode == 13) {
-	        var searchedFor = logValue();
-	        var rList = search(searchedFor)
-	        clearMarkers();
-	        if (rList != 0){
-	        	for (var i = 0; i < rList.length; ++i){
-	        		placeMarker(rList[i]);
-	        	}
-	        }
-	    }
-	})
-});
-
 function logValue(){
 	var x = byId('get-search').value;
 	return x;
@@ -133,6 +120,8 @@ function search(sstring){
 			makeListElement(testStuff[i]);
 			++found;
 		}
+
+		//Add new search options here
 	}
 
 	if (found == 0){
@@ -160,8 +149,10 @@ function placeMarker(resource){
 	var pos = new google.maps.LatLng(resource["location"]["lat"], resource["location"]["lng"]);
 	var marker = new google.maps.Marker({
 		position: pos,
-		map: map
+		map: map,
+		title: resource["name"]
 	});
+	markerListener(marker);
 	markers.push(marker);
 }
 
@@ -169,4 +160,43 @@ function clearMarkers(){
 	for (var i = 0; i < markers.length; ++i){
 		markers[i].setMap(null);
 	}
+	markers = [];
 }
+
+//---------Modal---------
+function markerListener(marker){
+	google.maps.event.addListener(marker, 'click', function() { 
+    	$('.rModal').css('display', 'block');
+    }); 
+}
+
+// JQuery Event Listeners
+$(document).ready(function(){
+	$(window).on("load resize", function(){
+		$(function(){
+	    	$('.rModCon').css({
+		        'position' : 'absolute',
+		        'left' : '10%',
+		        'top' : '50%',
+		        'margin-top' : function() {return -$(this).outerHeight()/2}
+	   		});
+		});
+	});
+
+	$('.close').on('click', function(){
+		$('.rModal').css({display: 'none'});
+	});
+
+	$("#get-search").on('keyup', function (e){
+	    if (e.keyCode == 13) {
+	        var searchedFor = logValue();
+	        var rList = search(searchedFor)
+	        clearMarkers();
+	        if (rList != 0){
+	        	for (var i = 0; i < rList.length; ++i){
+	        		placeMarker(rList[i]);
+	        	}
+	        }
+	    }
+	});
+});

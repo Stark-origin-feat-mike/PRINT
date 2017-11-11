@@ -144,3 +144,37 @@ hr{
 .dList:hover {
         background-color: red;
 }
+
+/*--------Modal--------*/
+.rModal{
+        display: none;
+        position: fixed;
+        height: inherit;
+        width: inherit;
+        left: inherit;
+        z-index: 1;
+        overflow: auto;
+        background-color: #000000;
+        background-color: rgba(0,0,0,0.4);
+
+}
+
+.rModCon{
+        background-color: #fefefe;
+        width: 80%;
+        padding: 20px;
+        border: 1px solid black;
+        border-radius: 5px;
+        position : absolute;
+}
+
+.close{
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+}
+
+.mBoxCont{
+
+}
