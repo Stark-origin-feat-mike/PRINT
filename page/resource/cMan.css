@@ -74,7 +74,17 @@ select{
 
 /********************************************remove_resource page********************************/
 #remove-resource{
-	display: none;
+	font-family: National;
+	text-align: center;
+	margin-top : 10px auto;
+	color: #EFAB00;
+}
+#smt{
+	
+	margin: auto;
+}
+work{
+	text-align:center;
 }
 
 .inText{
@@ -112,10 +122,11 @@ select{
 form{
 	display: inline-block
 	margin: 0 auto;
-	width: 150px;
+	width: 100%;
 	text-align: center;
 }
 
 #sbmt {
+	text-align:center;
 	color: black;
 }
