@@ -55,17 +55,37 @@ select{
 
 /********************************************add_resource page***********************************/
 #add-resource{
-	display: none;
+	font-family: National;
+	text-align: center;
+	margin-top : 10px auto;
+	color: #EFAB00;
+}
+#h4{
+	text-align: center;
 }
 
 /********************************************edit_resource page***********************************/
 #edit-resource{
-	display: none;
+	font-family: National;
+	text-align: center;
+	margin-top : 10px auto;
+	color: #EFAB00;
 }
 
 /********************************************remove_resource page********************************/
 #remove-resource{
-	display: none;
+	font-family: National;
+	text-align: center;
+	margin-top : 10px auto;
+	color: #EFAB00;
+}
+
+a:hover{
+	color:#EFAB00;
+}
+
+#h5{
+	font-size:20pt;
 }
 
 .inText{
