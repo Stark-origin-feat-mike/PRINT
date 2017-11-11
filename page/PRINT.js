@@ -3,7 +3,9 @@ var testStuff = [{"name": "interior", "location": {"lat": 41.147488, "lng": -81.
 
 //--------Shorthand--------
 function byId(id){	return document.getElementById(id);	};
-
+var nme = "I am a place holder";
+var loc = "i am a location place holder";
+var type = "i am a type place holder";
 var campusLocs = {};
 campusLocs['ken-options'] = [41.147488, -81.343053];
 campusLocs['sta-options'] = [40.867854, -81.437213];
@@ -167,7 +169,20 @@ function clearMarkers(){
 function markerListener(marker){
 	google.maps.event.addListener(marker, 'click', function() { 
     	$('.rModal').css('display', 'block');
-    }); 
+    });
+	nme = marker.title;
+	loc = marker.position;
+	var len = nme.length;
+	var i = 0;
+	nme = nme.toUpperCase();
+	while (testStuff[i]["name"].toUpperCase().substring(0, len) != nme){
+		type = i;
+		i++;
+	} 
+	type = testStuff[i]["type"];
+	
+	//var stm = search(marker.title);
+	//type = stm[0]["type"];
 }
 
 // JQuery Event Listeners
