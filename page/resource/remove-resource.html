@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- jQuery library -->
@@ -8,9 +9,10 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="cMan.css" type="text/css">
 	<script type="text/javascript" src="cMan.js"></script>
+	<script type="text/javascript" src="postUrls.js"></script> 
 </head>
 <body>
-	<nav class="navbar navbar-default" id="nav-override">
+	<nav class="navbar navbar-light bg-inverse" style="background-color #E5E854;" id="nav-override" >
 		<div class="container-fluid">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
@@ -20,7 +22,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="../curatorManager.html">KSUPRInT</a>
+				<a class="navbar-brand" href="../curatorManager.html" id="PRInT_logo"><img src="../logo.png"></a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
@@ -47,15 +49,16 @@
 	</nav>
 
 	<div id="remove-resource" class="page">
-			Remove Resource
+			<div id="title">Remove Resource</div>
+			<form id="form-id" method="post" action="remove-resource-url">
 			<select>
 				<option value="blank">blank</option>
 			</select>
-			<form action="#">
+			<input type="submit" value="Submit" id="sbmt" onclick="document.getElementById('form-id').submit();"/>
 				<!-- Name, Email, Space -->
 			
-				<div class="infoSection">
-					<input type="submit" value="Submit" id="sbmt"/>
+				<div class="infoSection" id="smt">
+					
 				</div>
 			</form>
 	</div>
