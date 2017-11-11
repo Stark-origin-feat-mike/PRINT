@@ -168,10 +168,26 @@ function clearMarkers(){
 //---------Modal---------
 function markerListener(marker){
 	google.maps.event.addListener(marker, 'click', function() { 
+		$(document).ready(function (){
+
+			loadMarkerInfo(marker);
+
+		})
     	$('.rModal').css('display', 'block');
+		
     });
+	
+	
+}
+
+function loadMarkerInfo(marker){
+	
+	document.getElementById("name").innerHTML = "Name:" + marker.title;
+	document.getElementById("loc").innerHTML = "Location: " + marker.position;
+	var name = marker.title;
+	
 	nme = marker.title;
-	loc = marker.position;
+	
 	var len = nme.length;
 	var i = 0;
 	nme = nme.toUpperCase();
@@ -180,9 +196,8 @@ function markerListener(marker){
 		i++;
 	} 
 	type = testStuff[i]["type"];
+	document.getElementById("type").innerHTML = "Type: " + type;
 	
-	//var stm = search(marker.title);
-	//type = stm[0]["type"];
 }
 
 // JQuery Event Listeners
