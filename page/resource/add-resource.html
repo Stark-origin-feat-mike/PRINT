@@ -48,7 +48,7 @@
 
 	<div id="add-resource" class="page">
 			<div id="title">Add A Resource</div>
-			<form action="#">
+			<form id="form-id" method="post" action="printmanager/AddNewResource">
 				<!-- Name, Email, Space -->
 				<div class="infoSection">
 					<h4>Resource Name </h4>
@@ -78,7 +78,8 @@
 				
 
 				<div class="infoSection">
-					<input type="submit" value="Submit" id="sbmt"/>
+					<input type="submit" value="Submit" id="sbmt" onclick="document.getElementById('form-id').submit();"/>
+					
 				</div>
 			</form>
 	</div>
