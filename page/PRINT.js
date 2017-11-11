@@ -38,6 +38,7 @@ function expand(id){
 
 // Initilizing Google Map
 var map;
+var markers = [];
 function showMap(){
 	var initState = {
 		center: new google.maps.LatLng(41.149467, -81.347666),
@@ -52,6 +53,7 @@ function showMap(){
 	      map: map,
 	      title: testStuff[i]["name"]
 	  	});
+	  	markers.push(marker);
 	}
 
 	google.maps.event.addListenerOnce(map, 'idle', function() {
@@ -76,7 +78,7 @@ function setHeights(){
 	$('#googleMap').css('height', wh-hh);
 }
 
-
+//--------Panning to a marker--------
 
 function dListClick(name) {
 	var lat;
@@ -92,11 +94,19 @@ function dListClick(name) {
 	map.panTo(nll);
 }
 
+//--------Stuff to do when searching--------
+
 $(document).ready(function(){
 	$("#get-search").on('keyup', function (e){
 	    if (e.keyCode == 13) {
 	        var searchedFor = logValue();
-	        search(searchedFor);
+	        var rList = search(searchedFor)
+	        clearMarkers();
+	        if (rList != 0){
+	        	for (var i = 0; i < rList.length; ++i){
+	        		placeMarker(rList[i]);
+	        	}
+	        }
 	    }
 	})
 });
@@ -107,21 +117,56 @@ function logValue(){
 }
 
 function search(sstring){
-	// Clearing Nav Bar List
+	var len = sstring.length;
+	sstring = sstring.toUpperCase();
 	$('#listing').empty();
+	var list = [];
+	var found = 0;
 	for (var i = 0; i < testStuff.length; ++i){
-		if (testStuff[i]["name"] == sstring){
+		if (testStuff[i]["name"].toUpperCase().substring(0, len) == sstring){
+			list.push(testStuff[i]);
 			makeListElement(testStuff[i]);
+			++found;
+		}
+		else if (testStuff[i]["type"].toUpperCase().substring(0, len) == sstring){
+			list.push(testStuff[i]);
+			makeListElement(testStuff[i]);
+			++found;
 		}
 	}
+
+	if (found == 0){
+		makeListElement('noMatch');
+		return -1;
+	}
+	return list;
+
 }
 
 function makeListElement(resource){
-	//for (var i = 0; i < testStuff.length; ++i){
-		var container = byId('listing');
+	var container = byId('listing');
+	if (resource != "noMatch"){
 		var node = document.createElement('li');
 		node.innerHTML = "<div class=\"dList\" onclick=\"dListClick(\'" + resource["name"] + "\')\"><p class=\"dPAttr\">Name: " 
 		+ resource["name"] + "</p><p>Type: " + resource["type"] + "</p></div>";
 		container.appendChild(node);
-	//}
+	}
+	else {
+		container.innerHTML = "<li id=\"noFind\">Sorry, No Matches Found</li>";
+	}
+}
+
+function placeMarker(resource){
+	var pos = new google.maps.LatLng(resource["location"]["lat"], resource["location"]["lng"]);
+	var marker = new google.maps.Marker({
+		position: pos,
+		map: map
+	});
+	markers.push(marker);
+}
+
+function clearMarkers(){
+	for (var i = 0; i < markers.length; ++i){
+		markers[i].setMap(null);
+	}
 }
