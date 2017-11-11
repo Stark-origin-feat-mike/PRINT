@@ -4,6 +4,7 @@ body {
 	color: #EFAB00;
 }
 
+/************************************************top navbar*************************************/
 #nav-override{
 	
 	background-color: #002664;
@@ -14,26 +15,46 @@ body {
 	height:80%;
 }
 
+/********************************************splash page****************************************/
 #splash{
 	display: block;
 }
 
+/********************************************add_curator page***********************************/
+#add-curator {
+	font-family: National;
+	text-align: center;
+	margin-top : 10px auto;
+	color: #EFAB00;
+}
+
+/********************************************edit_curator page***********************************/
 #edit-curator{
-	display: none;
+	font-family: National;
+	text-align: center;
+	margin-top : 10px auto;
+	color: #EFAB00;
 }
 
+/******************************************remove_curator page***********************************/
 #remove-curator{
-	display: none;
+	font-family: National;
+	text-align: center;
+	margin-top : 10px auto;
+	color: #EFAB00;
 }
 
+/********************************************add_resource page***********************************/
 #add-resource{
 	display: none;
 }
 
+/********************************************edit_resource page***********************************/
 #edit-resource{
 	display: none;
 }
 
+/********************************************remove_resource page********************************/
 #remove-resource{
 	display: none;
 }
@@ -61,13 +82,6 @@ body {
 	width: 100%;
 	text-align: right;
 	margin: 0px 0px 5px 0px;
-}
-
-#add-curator {
-	font-family: National;
-	text-align: center;
-	margin-top : 10px auto;
-	color: #EFAB00;
 }
 
 #title{
