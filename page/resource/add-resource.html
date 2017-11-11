@@ -10,7 +10,7 @@
 	<script type="text/javascript" src="cMan.js"></script>
 </head>
 <body>
-	<nav class="navbar navbar-default" id="nav-override">
+	<nav class="navbar navbar-light bg-inverse" style="background-color #E5E854;" id="nav-override" >
 		<div class="container-fluid">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
@@ -20,7 +20,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="../curatorManager.html">KSUPRInT</a>
+				<a class="navbar-brand" href="../curatorManager.html" id="PRInT_logo"><img src="../logo.png"></a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
@@ -47,35 +47,33 @@
 	</nav>
 
 	<div id="add-resource" class="page">
-			Add A Resource
+			<div id="title">Add A Resource</div>
 			<form action="#">
 				<!-- Name, Email, Space -->
 				<div class="infoSection">
-					<h4>Name </h4>
-					<input class="inText" type="text" name="Name" />
+					<h4>Resource Name </h4>
+					<input class="inText" type="text" name="Name" placeholder="3D Printer"/>
 				</div>
-				<hr>
 				
 				<div class="infoSection">
-				<h4>Training Required </h4>
-				<input class="inText" type="text" name="trainingrequired" />
+				<h4>Training</h4>
+				<input type="radio" name="yes"> yes
+				<input type="radio" name="no"> no
+				<h4>Training Description </h4>
+				<input class="inText" type="text" name="description" placeholder="video, in person, none, etc."/>
 				<h4>URL </h4>
-				<input class="inText" type="text" name="url" />
-				<h4>Description </h4>
-				<input class="inText" type="text" name="description" />
+				<input class="inText" type="text" name="url" placeholder="https://youtu.be/dQw4w9WgXcQ"/>
+				
 				</div>
-				<hr>
+			
 				<div class="infoSection">
-					<h4>Space </h4>
-					<input class="inText" type="text" name="spaceid" />
-				</div>
-				<div class="infoSection">
-					<h4>Operational? </h4>
-					<input class="inText" type="text" name="operational" />
+					<h4>Operational </h4>
+					<input type="radio" name="yes"> yes
+				<input type="radio" name="no"> no
 				</div>
 				<div class="infoSection">
 					<h4>Time limit </h4>
-					<input class="inText" type="text" name="time_limit" />
+					<input class="inText" type="text" name="time_limit" placeholder="none, 4hrs/day, etc."/>
 				</div>
 				
 
