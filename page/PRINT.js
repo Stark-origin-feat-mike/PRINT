@@ -99,6 +99,19 @@ function dListClick(name) {
 	map.panTo(nll);
 }
 
+//--------Showing a List View-------
+function showAll(){
+	$('#listing').empty();
+	var list = [];
+	var found = 0;
+	for (var i = 0; i < testStuff.length; ++i){
+		list.push(testStuff[i]);
+		makeListElement(testStuff[i]);
+		
+	}
+	return list;
+}
+
 //--------Stuff to do when searching--------
 function logValue(){
 	var x = byId('get-search').value;
@@ -169,9 +182,7 @@ function clearMarkers(){
 function markerListener(marker){
 	google.maps.event.addListener(marker, 'click', function() { 
 		$(document).ready(function (){
-
 			loadMarkerInfo(marker);
-
 		})
     	$('.rModal').css('display', 'block');
 		
@@ -181,13 +192,9 @@ function markerListener(marker){
 }
 
 function loadMarkerInfo(marker){
-	
-	document.getElementById("name").innerHTML = "Name:" + marker.title;
+	document.getElementById("name").innerHTML = "Name: " + marker.title;
 	document.getElementById("loc").innerHTML = "Location: " + marker.position;
-	var name = marker.title;
-	
 	nme = marker.title;
-	
 	var len = nme.length;
 	var i = 0;
 	nme = nme.toUpperCase();
@@ -221,6 +228,19 @@ $(document).ready(function(){
 	    if (e.keyCode == 13) {
 	        var searchedFor = logValue();
 	        var rList = search(searchedFor)
+	        clearMarkers();
+	        if (rList != 0){
+	        	for (var i = 0; i < rList.length; ++i){
+	        		placeMarker(rList[i]);
+	        	}
+	        }
+	    }
+	});
+	
+	$("#list-view").on('load', function (){
+	    if (e.keyCode == 13) {
+	        var searchedFor = logValue();
+	        var rList = showAll()
 	        clearMarkers();
 	        if (rList != 0){
 	        	for (var i = 0; i < rList.length; ++i){
