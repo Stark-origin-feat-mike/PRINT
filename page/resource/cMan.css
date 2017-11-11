@@ -1,0 +1,72 @@
+body {
+	background-color: #002664;
+	color: #EFAB00;
+}
+
+#nav-override{
+	margin-bottom: 0px;
+}
+
+#splash{
+	display: block;
+}
+
+#edit-curator{
+	
+}
+
+#remove-curator{
+	
+}
+
+#add-resource{
+	text-align: center;
+	margin: 0 auto;
+	color: pink;
+}
+
+
+
+#edit-resource{
+	
+}
+
+#remove-resource{
+	
+}
+
+.inText{
+	display: inline;
+}
+
+#add-curator h4{
+	display: inline;
+}
+
+.page {
+	margin: 0 auto;
+	text-align: center;
+}
+
+.infoSection{
+	display: block;
+	width: 100%;
+	text-align: right;
+	margin: 0px 0px 5px 0px;
+}
+
+#add-curator {
+	text-align: center;
+	margin: 0 auto;
+	color: pink;
+}
+
+form{
+	margin: 0 auto;
+	width: 270px;
+	text-align: center;
+}
+
+#sbmt {
+	color: black;
+}
