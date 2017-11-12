@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="PRINT.css" type="text/css">
+    <script src="PRINT.js" type="text/javascript"></script>
+</head>
+
+<body id="bootstrap-overides" onload="setHeights(), setRightWidth()" onresize="setHeights(), setRightWidth()">
+
+    <nav class="navbar navbar-default" id="nav-override">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="home.html"><img src="logo.png"></a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="./listView.html">List View</a></li>
+                <li><a href="./curator/curatorManager.html">For Curators</a></li>
+                <li><a href="#">LOGIN</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="left">
+        <nav id="sideBar">
+            <div id="sort">
+                <div class="inner-addon left-addon">
+                    <i class="glyphicon glyphicon-search"></i>
+                    <input type="text" class="form-control" id="get-search" 
+                     placeholder="Search for a resource"/>
+                </div>
+                <div class="down-menu" onclick="expand('campus-options')">
+                    <h4 id="campus-opts-selector">
+                        <i class="glyphicon glyphicon-menu-right"></i>
+                        Campus Search
+                    </h4>
+                </div>
+                <ul id="campus-options">
+                    <li class="copt-item">
+                        Kent Campus
+                    </li>    
+                    <li class="copt-item">
+                        Stark Campus
+                    </li>    
+                    <li class="copt-item">
+                        Geauga Campus
+                    </li>    
+                    <li class="copt-item">
+                        Ashtabula Campus
+                    </li>    
+                    <li class="copt-item">
+                        Salem Campus
+                    </li>
+                    <li class="copt-item">
+                        East Liverpool Campus
+                    </li>
+                    <li class="copt-item">
+                        Trumbull Campus
+                    </li>
+                    <li class="copt-item">
+                        Tuscarawas Campus
+                    </li>
+                </ul>
+            </div>
+            <hr>
+
+            <div id="bottom">
+                <ul id="listing">
+                    
+                </ul>                
+            </div>
+
+        </nav>
+    </div>
+
+</body>
+
+</html>
