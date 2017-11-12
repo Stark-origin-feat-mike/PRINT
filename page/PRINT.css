@@ -166,6 +166,7 @@ hr{
         border: 1px solid black;
         border-radius: 5px;
         position : absolute;
+        transform: translateY();
 }
 
 .close{
@@ -178,14 +179,3 @@ hr{
 .mBoxCont{
 
 }
-© 2017 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-API
-Training
-Shop
-Blog
